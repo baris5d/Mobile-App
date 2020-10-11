@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.green,
-        accentColor: Colors.green,
-        cursorColor: Colors.green,
+        accentColor: Colors.green[400],
+        cursorColor: Colors.green[400],
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: LoginScreen(),
