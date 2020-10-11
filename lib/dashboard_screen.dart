@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
-
-void main() {
-  runApp(MyApp());
-}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -12,16 +7,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.green,
-        accentColor: Colors.green,
-        cursorColor: Colors.green,
+        primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginScreen(),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
-/*
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -68,4 +61,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-*/
