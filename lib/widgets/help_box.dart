@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Modal.dart';
-
+import 'package:animai/map.dart';
 class HelpBox extends StatefulWidget {
    HelpBox({
     Key key,
@@ -136,6 +136,12 @@ class _HelpBox extends State<HelpBox> {
                 ),
               ],
             )
+          ),
+          Container(
+            height:120,
+            width: double.infinity,
+            margin: EdgeInsets.only(top: 20),
+            child: EmergencyMap()
           )
         ]),
         color: Colors.red,

@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'widgets/Emergencies.dart';
-
+import 'map.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -44,7 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Emergencies(),
       floatingActionButton: FloatingActionButton(
-        //onPressed: _incrementCounter,
+        onPressed: (){ Navigator.push(
+          context,
+              MaterialPageRoute(builder: (context) => Map())
+
+        );
+        },
         tooltip: 'Increment',
         child: Icon(Icons.car_rental),
         backgroundColor: Color.fromARGB(255,235,87,87),
