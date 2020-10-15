@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-import 'widgets/help_box.dart';
+import 'package:flutter/material.dart';
+import 'widgets/Emergencies.dart';
+import 'package:http/http.dart' as http;
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -29,16 +32,18 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Align( alignment: Alignment.center, child: Text(widget.title) )
       ),
-      body: HelpBox(
-        message: "Küçük dostumuza araba çarpıp kaçmış birisi yardım etsin!",
-        distance: 1,
-        status: 0,
-      ),
+      body: Emergencies(),
       floatingActionButton: FloatingActionButton(
         //onPressed: _incrementCounter,
         tooltip: 'Increment',
@@ -47,4 +52,5 @@ class _MyHomePageState extends State<MyHomePage> {
       ), 
     );
   }
+
 }
