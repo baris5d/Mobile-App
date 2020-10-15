@@ -27,16 +27,14 @@ class _EmergenciesState extends State<Emergencies> {
 
   Future<String> getEmergency() async{
     final response =
-      await http.get('https://api.mocki.io/v1/db92bc08');
+      await http.get('https://api.mocki.io/v1/85f607d7');
 
       if (response.statusCode == 200) {
-        //print(response.body);
         final List result = jsonDecode(response.body);
         print(result[0]);
         setState((){
           data = result;
         });
-        //print(data);
       } else {
         throw Exception('Failed to load album');
       }
@@ -52,7 +50,7 @@ class _EmergenciesState extends State<Emergencies> {
             return HelpBox(
                 message: data[index]['message'],
                 distance: data[index]['distance'],
-                status: data[index]['status']
+                status: data[index]['status'],
             );
           },
       ), 

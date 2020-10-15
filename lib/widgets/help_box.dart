@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'Modal.dart';
 
 class HelpBox extends StatefulWidget {
    HelpBox({
     Key key,
     this.status,
     this.message,
-    this.distance
+    this.distance,
   }) : super(key: key);
 
 
@@ -20,7 +21,9 @@ class HelpBox extends StatefulWidget {
 class _HelpBox extends State<HelpBox> {
   @override
   Widget build(BuildContext context) {
-    return new Container(
+    return GestureDetector(
+    onTap: () => showModal(),
+    child: new Container(
           height:120.0,
           margin: new EdgeInsets.only(top:10.0, left:20.0, right:20.0),
           decoration: new BoxDecoration(borderRadius: new BorderRadius.all(new Radius.circular(10.0)),
@@ -99,6 +102,45 @@ class _HelpBox extends State<HelpBox> {
               ],
             )
           ),
+      ),
+    );
+  }
+  void showModal() {
+    showModalBottomSheet(context: context, builder: (context){
+      return Modal(
+        elements: Column(children: <Widget>[
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(bottom: 10),
+            child:Text(
+              widget.message,
+              style: new TextStyle(fontSize: 16),
+            ),
+          ),
+          Container(
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: (widget.status==1) ? Color.fromARGB(255, 235, 87, 87) : Color.fromARGB(255, 45, 156, 219),
+                  child:Icon(
+                    (widget.status==1) ? Icons.hourglass_top_outlined : Icons.car_repair,
+                    color: Colors.white,
+                    size: 18.0,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left:10),
+                  child:Text(
+                    (widget.status==1) ? "Yardım Bekliyor" : "Barış D. yolda"
+                  )
+                ),
+              ],
+            )
+          )
+        ]),
+        color: Colors.red,
+        icon: Icon(Icons.car_rental, color: Colors.white)
       );
+    });
   }
 }
