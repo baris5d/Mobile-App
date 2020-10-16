@@ -69,15 +69,9 @@ class LoginScreen extends StatelessWidget {
             return null;
           },
           onLogin: (loginData) {
-            print('Login info');
-            print('Name: ${loginData.name}');
-            print('Password: ${loginData.password}');
             return _loginUser(loginData);
           },
           onSignup: (loginData) {
-            print('Signup info');
-            print('Name: ${loginData.name}');
-            print('Password: ${loginData.password}');
             return _loginUser(loginData);
           },
           onSubmitAnimationCompleted: () {
@@ -86,8 +80,6 @@ class LoginScreen extends StatelessWidget {
             ));
           },
           onRecoverPassword: (name) {
-            print('Recover password info');
-            print('Name: $name');
             return _recoverPassword(name);
           },
           //showDebugButtons: true,

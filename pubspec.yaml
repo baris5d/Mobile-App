@@ -21,6 +21,12 @@ dependencies:
   cupertino_icons: ^1.0.0
   google_maps_flutter: ^1.0.3
   maps_launcher: ^1.2.2+1
+  camera:
+  path_provider:
+  image_picker:
+  path:
+  geolocator:
+  geocoding:
 
 dev_dependencies:
   flutter_test:

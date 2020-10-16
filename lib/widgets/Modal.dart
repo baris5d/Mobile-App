@@ -20,7 +20,7 @@ class _Modal extends State<Modal> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Color(0xFF737373),
+        color: Color.fromARGB(100, 0, 0, 0),
         child:Container(
           decoration: new BoxDecoration(
               borderRadius: BorderRadius.only(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'Modal.dart';
 import 'package:animai/map.dart';
+
+
 class HelpBox extends StatefulWidget {
    HelpBox({
     Key key,
@@ -106,7 +108,9 @@ class _HelpBox extends State<HelpBox> {
     );
   }
   void showModal() {
-    showModalBottomSheet(context: context, builder: (context){
+    showModalBottomSheet(context: context, 
+    barrierColor: Color.fromARGB(100, 0, 0, 0),
+    builder: (context){
       return Modal(
         elements: Column(children: <Widget>[
           Container(
