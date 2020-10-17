@@ -27,6 +27,9 @@ dependencies:
   path:
   geolocator:
   geocoding:
+  permission_handler:
+  fluttertoast:
+
 
 dev_dependencies:
   flutter_test:
@@ -37,3 +40,7 @@ flutter:
 
   assets:
   - assets/images/paws.png
+  - assets/images/green.png
+  - assets/images/red.png
+  - assets/images/orange.png
+  - assets/images/grey.png

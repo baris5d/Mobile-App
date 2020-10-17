@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'widgets/Emergencies.dart';
+import 'feed.dart';
 import 'widgets/Modal.dart';
 import 'widgets/checkbox.dart';
 
@@ -10,7 +10,6 @@ import 'widgets/current_location.dart';
 
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,21 +18,21 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Dirty Paws'),
+      home: Dashboard(title: 'Dirty Paws'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class Dashboard extends StatefulWidget {
+  Dashboard({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _DashboardState createState() => _DashboardState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _DashboardState extends State<Dashboard> {
 
 
 
@@ -113,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Align( alignment: Alignment.center, child: Text(widget.title) )
         ),
-        body: Emergencies(),
+        body: Feed(),
         floatingActionButton: FloatingActionButton(
           onPressed: (){ showModal(); },
           tooltip: 'Increment',
@@ -124,9 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-
-
- 
 
   void showModal() {
     showModalBottomSheet(

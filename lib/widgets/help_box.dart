@@ -27,7 +27,7 @@ class _HelpBox extends State<HelpBox> {
     onTap: () => showModal(),
     child: new Container(
           height:120.0,
-          margin: new EdgeInsets.only(top:10.0, left:20.0, right:20.0),
+          margin: new EdgeInsets.only(left:20.0, right:20.0, bottom:20.0),
           decoration: new BoxDecoration(borderRadius: new BorderRadius.all(new Radius.circular(10.0)),
           color: Colors.white,
           boxShadow: [

@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
         return 'E-posta adresi bulunamadı';
       }
       if (mockUsers[data.name] != data.password) {
-        return 'Şifreler uyuşmuyor';
+        return 'E-posta veya şifre hatalı';
       }
       return null;
     });
