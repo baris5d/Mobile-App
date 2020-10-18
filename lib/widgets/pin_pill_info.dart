@@ -13,10 +13,14 @@ class MapPinPillComponent extends StatefulWidget {
 }
 
 class MapPinPillComponentState extends State<MapPinPillComponent> {
-
+  
+  @override
+  void initState(){
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-
+    
     return AnimatedPositioned(
         bottom: widget.pinPillPosition,
         right: 0,
@@ -41,7 +45,7 @@ class MapPinPillComponentState extends State<MapPinPillComponent> {
                   Container(
                     width: 50, height: 50,
                     margin: EdgeInsets.only(left: 10),
-                    child: ClipOval(child: Image.asset(widget.currentlySelectedPin.avatarPath, fit: BoxFit.cover )),
+                    child: ClipOval(child: Image.asset(widget.currentlySelectedPin.pinPath, fit: BoxFit.cover )),
                   ),
                   Expanded(
                     child: Container(
@@ -50,7 +54,8 @@ class MapPinPillComponentState extends State<MapPinPillComponent> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text("Mama tükendi", style: TextStyle(color: widget.currentlySelectedPin.labelColor)),
+                          Text("${widget.currentlySelectedPin.foodAmount.toInt().round()} gr. kaldı", style: TextStyle( color : Colors.blue )),
+                          Text("Tahmini ${widget.currentlySelectedPin.prediction.toInt().round()} saatte tükenecek")
                         ],
                       ),
                     ),

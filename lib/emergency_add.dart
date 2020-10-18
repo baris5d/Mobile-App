@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:animai/map.dart';
 class HelpBox extends StatefulWidget {
    HelpBox({
     Key key,

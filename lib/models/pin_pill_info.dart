@@ -1,9 +1,10 @@
 import 'dart:ui';
 
 class PinInformation {
+  double foodAmount;
+  double prediction;
+  int locationId;
   String pinPath;
-  String avatarPath;
-  Color labelColor;
 
-  PinInformation({this.pinPath, this.avatarPath, this.labelColor});
+  PinInformation({this.foodAmount, this.prediction, this.locationId, this.pinPath});
 }

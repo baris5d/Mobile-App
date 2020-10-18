@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:animai/models/food_data.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -15,7 +18,7 @@ class FoodMap extends StatefulWidget {
 
 class _FoodMapState extends State<FoodMap> {
 
-  final CameraPosition vegasPosition = CameraPosition(target: LatLng(36.0953103, -115.1992098), zoom: 10);
+  final CameraPosition vegasPosition = CameraPosition(target: LatLng(35.141091, 33.912788), zoom: 12);
   Set<Marker> allFoods= {};
   Completer<GoogleMapController> _controller = Completer();
 
@@ -26,11 +29,17 @@ class _FoodMapState extends State<FoodMap> {
   BitmapDescriptor _red;
   BitmapDescriptor _green;
 
-
   double pinPillPosition = -100;
-  PinInformation currentlySelectedPin = PinInformation(pinPath: '', avatarPath: '', labelColor: Colors.grey);
+  PinInformation currentlySelectedPin = PinInformation(foodAmount: 0, prediction:0, locationId: 0, pinPath: "assets/images/grey.png");
   PinInformation sourcePinInfo;
   PinInformation destinationPinInfo;
+
+  List<PinInformation> allPins = List<PinInformation>();
+
+  String redPath = "assets/images/red.png";
+  String greyPath = "assets/images/grey.png";
+  String orangePath = "assets/images/orange.png";
+  String greenPath = "assets/images/green.png";
 
   @override
   void initState() {
@@ -42,10 +51,23 @@ class _FoodMapState extends State<FoodMap> {
     await createPositions();
     setState((){});
   }
+  
+  Future<List<FoodData>>_getLocations() async{
+   final response =
+      await http.get('https://dirty-paws.ey.r.appspot.com/remaining/');
+
+      if (response.statusCode == 200) {
+        return List<FoodData>.from(json.decode(response.body).map((x) => FoodData.fromJson(x)));
+
+      } else {
+        throw Exception('Failed to load album');
+      }
+  }
+
 
   void createMarker() async{
     _grey = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5), 'assets/images/grey.png');
+        ImageConfiguration(size: Size(48, 48)), 'assets/images/grey.png');
     _green = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(size: Size(48, 48)), 'assets/images/green.png');
     _orange = await BitmapDescriptor.fromAssetImage(
@@ -55,107 +77,32 @@ class _FoodMapState extends State<FoodMap> {
 
   }
 
-  void createPositions(){
-    allFoods.add(Marker(
-      markerId: MarkerId('first'),
-      draggable: false,
-      icon: _grey,
-      onTap: () {
-          setState(() {
-            currentlySelectedPin = sourcePinInfo;
-            pinPillPosition = 0;
-          });
-      },
-      position: LatLng(36.0953103, -115.1992098),
-    ));
-
-    sourcePinInfo = PinInformation(
-      pinPath: "assets/images/grey.png",
-      avatarPath: "assets/images/grey.png",
-      labelColor: Colors.blueAccent
-    );
-
-    allFoods.add(Marker(
-      markerId: MarkerId('second'),
-      draggable: false,
-      icon: _green,
-      onTap: () {
-          setState(() {
-            currentlySelectedPin = sourcePinInfo;
-            pinPillPosition = 0;
-          });
+  void createPositions() async{
+    List<FoodData> locations = await _getLocations();
+    locations.forEach((item){
+      allFoods.add(Marker(
+        markerId: MarkerId(item.locationId.toString()),
+        draggable: false,
+        icon: item.prediction<=1 ? _red : item.prediction > 1 && item.prediction <= 3 ? _orange : _green,
+        onTap: () {
+            setState(() {
+              currentlySelectedPin = allPins[item.locationId-1];
+              pinPillPosition = 0;
+            });
         },
-      position: LatLng(31.0953103, -115.1992098),
-    ));
-
-
-    
-    sourcePinInfo = PinInformation(
-      pinPath: "assets/images/green.png",
-      avatarPath: "assets/images/green.png",
-      labelColor: Colors.blueAccent
-    );
-
-
-    allFoods.add(Marker(
-      markerId: MarkerId('third'),
-      draggable: false,
-      icon: _orange,
-      onTap: () {
-          setState(() {
-            currentlySelectedPin = sourcePinInfo;
-            pinPillPosition = 0;
-          });
-        },
-      position: LatLng(26.0953103, -15.1992098),
-    ));
-
-    
-    sourcePinInfo = PinInformation(
-      pinPath: "assets/images/red.png",
-      avatarPath: "assets/images/green.png",
-      labelColor: Colors.blueAccent
-    );
-
-    allFoods.add(Marker(
-      markerId: MarkerId('fourth'),
-      draggable: false,
-      icon: _red,
-      onTap: () {
-          setState(() {
-            currentlySelectedPin = sourcePinInfo;
-            pinPillPosition = 0;
-          });
-        },
-      position: LatLng(38.0953103, -115.1992098),
-    ));
-
-    
-    sourcePinInfo = PinInformation(
-      pinPath: "assets/images/red.png",
-      avatarPath: "assets/images/green.png",
-      labelColor: Colors.blueAccent
-    );
-
-
-    allFoods.add(Marker(
-      markerId: MarkerId('fifth'),
-      draggable: false,
-      icon:_green,
-      onTap: () {
-          setState(() {
-            currentlySelectedPin = sourcePinInfo;
-            pinPillPosition = 0;
-          });
-        },
-      position: LatLng(32.0953103, -115.1992098),
-    ));
-    
-    sourcePinInfo = PinInformation(
-      pinPath: "assets/images/red.png",
-      avatarPath: "assets/images/green.png",
-      labelColor: Colors.blueAccent
-    );
+        position: LatLng(item.longitude,item.latitude)
+      ));
+      
+      
+      allPins.add(
+        PinInformation(
+          locationId: item.locationId,
+          foodAmount: item.foodAmountGr,
+          prediction: item.prediction,
+          pinPath: item.prediction<=1 ? redPath : item.prediction>1 && item.prediction <= 3 ? orangePath : greenPath
+        )
+      );
+    });
   }
   void onMapCreated(GoogleMapController controller){
     _controller.complete(controller);

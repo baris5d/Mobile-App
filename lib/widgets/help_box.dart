@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'Modal.dart';
 import 'package:animai/map.dart';
 
@@ -8,19 +11,48 @@ class HelpBox extends StatefulWidget {
     Key key,
     this.status,
     this.message,
-    this.distance,
+    this.owner_id,
+    this.user_id,
+    this.location_id,
+    this.latitude,
+    this.longitude,
+    this.location
   }) : super(key: key);
 
 
   final String message;
   int status;
-  int distance;
+  int location_id;
+  int user_id;
+  int owner_id;
+  final double latitude;
+  final double longitude;
+  final Position location;
 
   @override
   _HelpBox createState() => _HelpBox();
 }
 
 class _HelpBox extends State<HelpBox> {
+  
+  double _latitude;
+  double _longitude;
+
+  String distance;
+  bool calculated = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+
+  Future<String> _getCurrentLocation() async {
+    double _distance = GeolocatorPlatform.instance.distanceBetween(widget.location.latitude, widget.location.longitude, widget.longitude, widget.latitude);
+    return (_distance.toInt()/1000).round().toString();
+  }
+ 
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -85,12 +117,14 @@ class _HelpBox extends State<HelpBox> {
                               child: Container(
                                 child: new Align(
                                   alignment: Alignment.centerRight, 
-                                  child: new Text( 
-                                    (widget.distance.toString()) + " km. yakınında",
-                                    style: new TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 12.0
-                                      )
+                                  child: 
+                                     FutureBuilder < String > (
+                                        future: _getCurrentLocation(),
+                                        builder: (context, snapshot) {
+                                        if (snapshot.data!=null) {
+                                          return Text("${snapshot.data} km. mesafe");
+                                        }
+                                      }
                                     )
                                   )
                               ),
