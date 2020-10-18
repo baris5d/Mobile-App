@@ -19,5 +19,7 @@ Harita bilgileri Google Maps API ile sağlanıp, Geolocator ve Geocoding yardım
 ## Kurulum
 
 `git clone https://github.com/Dirty-Paws/Mobile-App.git`
+
 `cd Mobile-App`
+
 `flutter run`
