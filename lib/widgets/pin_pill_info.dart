@@ -20,7 +20,8 @@ class MapPinPillComponentState extends State<MapPinPillComponent> {
   }
   @override
   Widget build(BuildContext context) {
-    
+    print(widget.currentlySelectedPin.prediction);
+    String remainingText = widget.currentlySelectedPin.prediction==0 ? "Mama tükendü" : widget.currentlySelectedPin.prediction < 1.0 ? "Tahmini ${((widget.currentlySelectedPin.prediction*0.6)*100).toInt().round()} dakikada tükenecek" : "Tahmini ${widget.currentlySelectedPin.prediction.toInt().round()} saatte tükenecek";
     return AnimatedPositioned(
         bottom: widget.pinPillPosition,
         right: 0,
@@ -55,7 +56,7 @@ class MapPinPillComponentState extends State<MapPinPillComponent> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text("${widget.currentlySelectedPin.foodAmount.toInt().round()} gr. kaldı", style: TextStyle( color : Colors.blue )),
-                          Text("Tahmini ${widget.currentlySelectedPin.prediction.toInt().round()} saatte tükenecek")
+                          Text( remainingText )
                         ],
                       ),
                     ),
