@@ -1,9 +1,10 @@
 import 'dart:math';
 
+import '../users.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'Modal.dart';
-import 'package:animai/map.dart';
+import '../map.dart';
 
 
 class HelpBox extends StatefulWidget {
@@ -82,10 +83,21 @@ class _HelpBox extends State<HelpBox> {
                         flex:2,
                         child: new Align(
                           alignment: Alignment.topLeft, 
-                          child: Text( 
-                            widget.message,
-                            style: new TextStyle( fontWeight: FontWeight.w500 , fontSize: 14.0)
-                            )
+                          child: Column(children: [
+                           Container(
+                            alignment: Alignment.topLeft,
+                             child: Text( 
+                              "${mockUsers[widget.owner_id-1]['name']} yardım istiyor" ,
+                              style: new TextStyle(fontWeight: FontWeight.w600, fontSize:14)
+                            ),
+                           ),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              child:Text(
+                               "${widget.message}",
+                              style: new TextStyle(  fontSize: 14.0)
+                            ))
+                          ],)
                           )
                       ),
                       new Expanded(
@@ -106,7 +118,7 @@ class _HelpBox extends State<HelpBox> {
                                       ),
                                     ),
                                     Text(
-                                      (widget.status==1) ? "Yardım Bekliyor" : "Barış D. yolda"
+                                      (widget.status==1) ? "Yardım Bekliyor" : "${mockUsers[widget.user_id]['name']} yolda"
                                     ),
                                   ],
                                 )

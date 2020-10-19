@@ -1,5 +1,5 @@
-name: animai
-description: A new Flutter project.
+name: DirtyPaws
+description: Dirty Paws is an application which provides....
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -29,6 +29,8 @@ dependencies:
   geocoding:
   permission_handler:
   fluttertoast:
+  firebase_core: ^0.4.0+9
+  firebase_auth: ^0.14.0+5
 
 
 dev_dependencies:

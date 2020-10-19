@@ -1,32 +1,32 @@
+import 'users.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'dashboard_screen.dart';
-import 'users.dart';
 import 'custom_route.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = '/auth';
-
+  int id;
   Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
 
   Future<String> _loginUser(LoginData data) {
     return Future.delayed(loginTime).then((_) {
-      if (!mockUsers.containsKey(data.name)) {
-        return 'E-posta adresi bulunamadı';
+      for(var i = 0; i < mockUsers.length; i++){
+        if(mockUsers[i]['email'].contains(data.name)){
+          id = i;
+          return null;
+        }
       }
-      if (mockUsers[data.name] != data.password) {
-        return 'E-posta veya şifre hatalı';
-      }
-      return null;
+      return "E-Posta ya da şifre yanlış";
     });
   }
 
   Future<String> _recoverPassword(String name) {
     return Future.delayed(loginTime).then((_) {
-      if (!mockUsers.containsKey(name)) {
+      /*if (!mockUsers.containsKey(name)) {
         return 'Böyle bir kullanıcı yok';
-      }
+      }*/
       return null;
     });
   }
