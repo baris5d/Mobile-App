@@ -49,7 +49,7 @@ class _HelpBox extends State<HelpBox> {
 
 
   Future<String> _getCurrentLocation() async {
-    double _distance = GeolocatorPlatform.instance.distanceBetween(widget.location.latitude, widget.location.longitude, widget.longitude, widget.latitude);
+    double _distance = await GeolocatorPlatform.instance.distanceBetween(widget.location.latitude, widget.location.longitude, widget.longitude, widget.latitude);
     return (_distance.toInt()/1000).round().toString();
   }
  
@@ -130,13 +130,14 @@ class _HelpBox extends State<HelpBox> {
                                 child: new Align(
                                   alignment: Alignment.centerRight, 
                                   child: 
-                                     FutureBuilder < String > (
+                                     new FutureBuilder < String > (
                                         future: _getCurrentLocation(),
                                         builder: (context, snapshot) {
-                                        if (snapshot.data!=null) {
-                                          return Text("${snapshot.data} km. mesafe");
+                                        if (snapshot.data==null) {
+                                           return new Text("Mesafe hesaplanıyor...");
+                                        }else
+                                           return new Text("${snapshot.data} km. mesafe");
                                         }
-                                      }
                                     )
                                   )
                               ),

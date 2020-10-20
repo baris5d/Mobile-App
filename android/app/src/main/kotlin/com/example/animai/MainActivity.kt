@@ -1,4 +1,4 @@
-package com.example.animai
+package com.example.dirtypaws
 
 import io.flutter.embedding.android.FlutterActivity
 
