@@ -1,11 +1,11 @@
-import 'dart:math';
-
 import '../users.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'Modal.dart';
 import '../map.dart';
 
+import 'package:permission_handler/permission_handler.dart';
+import 'package:android_intent/android_intent.dart';
 
 class HelpBox extends StatefulWidget {
    HelpBox({
@@ -35,22 +35,23 @@ class HelpBox extends StatefulWidget {
 }
 
 class _HelpBox extends State<HelpBox> {
-  
+
   double _latitude;
   double _longitude;
 
   String distance;
   bool calculated = false;
-
+  
   @override
   void initState() {
     super.initState();
   }
 
-
   Future<String> _getCurrentLocation() async {
-    double _distance = await GeolocatorPlatform.instance.distanceBetween(widget.location.latitude, widget.location.longitude, widget.longitude, widget.latitude);
-    return (_distance.toInt()/1000).round().toString();
+    if (await Permission.locationWhenInUse.serviceStatus.isEnabled) {
+       double _distance = await GeolocatorPlatform.instance.distanceBetween(widget.location.latitude, widget.location.longitude, widget.longitude, widget.latitude);
+      return (_distance.toInt()/1000).round().toString();
+    }
   }
  
 
@@ -189,10 +190,14 @@ class _HelpBox extends State<HelpBox> {
             )
           ),
           Container(
-            height:120,
+            height:100,
             width: double.infinity,
             margin: EdgeInsets.only(top: 20),
             child: EmergencyMap()
+          ),
+          RaisedButton(onPressed: (){},
+            color: Colors.green,
+            child:Text("Geliyorum", style: new TextStyle( color: Colors.white ))
           )
         ]),
         color: Colors.red,
